@@ -1,38 +1,82 @@
 #include "wifi.h"
 
-// WiFi parameters
-const char* ssid = "Rtone Cisco";
-const char* password = "0478477078rto";
+#include <inttypes.h>
+
 
 void init_wifi(void)
 {
+    // WiFi parameters
+    const char* ssid = "Rtone Cisco";
+    const char* password = "0478477078rto";
+
     // Connect to WiFi
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
+    connect_to_AP(ssid, password);
+}
 
-    Serial.print("Connecting to WiFi");
+// WL_IDLE_STATUS      = 0,
+// WL_NO_SSID_AVAIL    = 1,
+// WL_SCAN_COMPLETED   = 2,
+// WL_CONNECTED        = 3,
+// WL_CONNECT_FAILED   = 4,
+// WL_CONNECTION_LOST  = 5,
+// WL_DISCONNECTED     = 6
+int connect_to_AP(const char* ssid_ap, const char* password_ap)
+{
+    WiFi.begin(ssid_ap, password_ap);
 
-    while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-        Serial.print(".");
-        delay(5000);
-        // ESP.restart();
+    // TODO => should try for 5 seconds, and if still no connection => return 0;
+    if (WiFi.waitForConnectResult() == WL_CONNECTED) {
+        Serial.println("Ready");
+        Serial.print("IP address: ");
+        Serial.println(WiFi.localIP());
+        return 1;
+    } else {
+        return 0;
     }
 
-    Serial.println("Ready");
-    Serial.print("IP address: ");
-    Serial.println(WiFi.localIP());
-
-
 }
 
-void init_server(void)
+// void init_server(void)
+// {
+//     WiFiServer server(80);
+
+//     // Start the server
+//     server.begin();
+//     Serial.println("Server started");
+// }
+
+int scan_network(void)
 {
-    WiFiServer server(80);
+    // WiFi.disconnect();
+    Serial.println("scan start");
 
-    // Start the server
-    server.begin();
-    Serial.println("Server started");
+    // WiFi.scanNetworks will return the number of networks found
+    int n = WiFi.scanNetworks();
+
+    Serial.println("scan done");
+
+    return n;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // void loop() {
 //     // Check if a client has connected

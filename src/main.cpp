@@ -6,8 +6,10 @@ void setup(void)
     Serial.println("Booting");
     configure_console();
 
-    init_wifi();
-    init_ota();
+    // init_wifi();
+    // scan_network();
+    // init_ota();
+    init_accesspoint();
 }
 
 void configure_console(void)
