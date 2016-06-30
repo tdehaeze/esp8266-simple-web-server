@@ -1,6 +1,8 @@
 #ifndef WIFI_H_INCLUDED
 #define WIFI_H_INCLUDED
 
+#include <inttypes.h> // TODO => USED ?
+#include <Arduino.h> // For Serial
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 

@@ -1,8 +1,5 @@
 #include "wifi.h"
 
-#include <inttypes.h>
-
-
 void init_wifi(void)
 {
     // WiFi parameters

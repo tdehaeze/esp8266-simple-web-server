@@ -1,15 +1,13 @@
 // Import required libraries
-#include "main.h";
+#include "main.h"
 
 void setup(void)
 {
-    Serial.println("Booting");
-    configure_console();
-
+    // configure_console();
     // init_wifi();
     // scan_network();
     // init_ota();
-    init_accesspoint();
+    // init_accesspoint();
 }
 
 void configure_console(void)
@@ -20,5 +18,12 @@ void configure_console(void)
 
 void loop(void)
 {
-    ArduinoOTA.handle();
+    // yield(); // For ESP8266 to not dump
+
+    // if (otaFlag) {
+    //     otaReceive();
+    //     // ArduinoOTA.handle();
+    // } else {
+    //     customLoop();
+    // }
 }

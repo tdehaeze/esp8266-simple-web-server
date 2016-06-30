@@ -6,6 +6,7 @@
 #include <ota.h>
 #include <wifi.h>
 #include <accesspoint.h>
+#include <SoftwareSerial.h>
 
 void configure_console(void);
 void setup(void);
