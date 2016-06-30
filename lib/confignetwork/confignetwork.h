@@ -2,8 +2,8 @@
 #define CONFIGNETWORK_H_INCLUDED
 
 #include <Arduino.h> // For Serial
-#include "eeprom.h"
-#include "WString.h"
+#include <eepromutil.h>
+#include <WString.h>
 
 struct strConfig {
     String      ssid;

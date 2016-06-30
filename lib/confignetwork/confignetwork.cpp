@@ -1,4 +1,4 @@
-#include "confignetwork.h"
+#include <confignetwork.h>
 
 void writeConfig(void)
 {

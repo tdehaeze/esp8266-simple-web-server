@@ -1,65 +1,64 @@
-#ifndef PAGE_NETWORKCONFIGURATION_H_INCLUDED
-#define PAGE_NETWORKCONFIGURATION_H_INCLUDED
+#include <htmlfunctions.h>
 
-#include <Arduino.h> // For Serial
-#include <confignetwork.h>
-#include <accesspoint.h>
-#include <helpers.h>
-#include <ota.h>
-#include <WString.h>
-
-const char PAGE_NetworkConfiguration[] PROGMEM = R"=====(
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<a href="/" class="btn btn-s"><</a>&nbsp;&nbsp;<strong>Network Configuration</strong>
-<hr>
-Connect to Router with these settings:<br>
-<form action="" method="get">
-    <table border="0"  cellspacing="0" cellpadding="3" style="width:310px" >
-        <tr><td align="right">SSID:</td><td><input type="text" id="ssid" name="ssid" value=""></td></tr>
-        <tr><td align="right">Password:</td><td><input type="text" id="password" name="password" value=""></td></tr>
-        <tr><td align="right">DHCP:</td><td><input type="checkbox" id="dhcp" name="dhcp"></td></tr>
-        <tr><td align="right">IP:</td><td><input type="text" id="ip_0" name="ip_0" size="3">.<input type="text" id="ip_1" name="ip_1" size="3">.<input type="text" id="ip_2" name="ip_2" size="3">.<input type="text" id="ip_3" name="ip_3" value="" size="3"></td></tr>
-        <tr><td align="right">Netmask:</td><td><input type="text" id="nm_0" name="nm_0" size="3">.<input type="text" id="nm_1" name="nm_1" size="3">.<input type="text" id="nm_2" name="nm_2" size="3">.<input type="text" id="nm_3" name="nm_3" size="3"></td></tr>
-        <tr><td align="right">Gateway:</td><td><input type="text" id="gw_0" name="gw_0" size="3">.<input type="text" id="gw_1" name="gw_1" size="3">.<input type="text" id="gw_2" name="gw_2" size="3">.<input type="text" id="gw_3" name="gw_3" size="3"></td></tr>
-        <tr><td colspan="2" align="center"><input type="submit" style="width:150px" class="btn btn-m btn-blue" value="Save"></td></tr>
-    </table>
-</form>
-<hr>
-<strong>Connection State:</strong><div id="connectionstate">N/A</div>
-<hr>
-<strong>Networks:</strong><br>
-<table border="0"  cellspacing="3" style="width:310px" >
-    <tr><td><div id="networks">Scanning...</div></td></tr>
-    <tr><td align="center"><a href="javascript:GetState()" style="width:150px" class="btn btn-m btn-blue">Refresh</a></td></tr>
-</table>
-
-<script>
-function GetState() {
-    setValues("/admin/connectionstate");
-}
-function selssid(value) {
-    document.getElementById("ssid").value = value;
-}
-window.onload = function() {
-    load("style.css","css", function() {
-        load("microajax.js","js", function() {
-            setValues("/admin/values");
-            setTimeout(GetState,3000);
-        });
-    });
+// Functions for this Page
+void send_devicename_value_html(void)
+{
+    String values = "";
+    values += "devicename|";
+    values += config.DeviceName;
+    values += "|div\n";
+    server.send(200, "text/plain", values);
+    Serial.println(__FUNCTION__);
 }
 
-function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,a.type="text/javascript",a.async=!1,a.onload=function(){n()},document.getElementsByTagName("head")[0].appendChild(a)}else if("css"==t){var a=document.createElement("link");a.href=e,a.rel="stylesheet",a.type="text/css",a.async=!1,a.onload=function(){n()},document.getElementsByTagName("head")[0].appendChild(a)}}
+void send_general_html(void)
+{
+    if (server.args() > 0)  // Save Settings
+    {
+        String temp = "";
+        for (uint8_t i = 0; i < server.args(); i++) {
+            if (server.argName(i) == "devicename") config.DeviceName = urldecode(server.arg(i));
+        }
+        // writeConfig();
+    }
+    server.send(200, "text/html", PAGE_AdminGeneralSettings);
+    Serial.println(__FUNCTION__);
+}
 
-</script>
-)=====";
+void send_general_configuration_values_html(void)
+{
+    String values ="";
+    values += "devicename|";
+    values += config.DeviceName;
+    values += "|input\n";
 
-const char PAGE_WaitAndReload[] PROGMEM = R"=====(
-<meta http-equiv="refresh" content="5; URL=config.html">
-Please Wait....Configuring and Restarting.
-)=====";
+    server.send(200, "text/plain", values);
+    Serial.println(__FUNCTION__);
+}
 
+String GetMacAddress(void)
+{
+    uint8_t mac[6];
+    char macStr[18] = {0};
+    WiFi.macAddress(mac);
+    sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5]);
+    return  String(macStr);
+}
+
+// FILL WITH INFOMATION
+// TODO
+void send_information_values_html(void)
+{
+    String values = "";
+    values += "x_ssid|" + WiFi.SSID() + "|div\n";
+    // values += "x_ip|" +       WiFi.localIP()[0] +     "." + WiFi.localIP()[1] +     "." + WiFi.localIP()[2] +     "." + WiFi.localIP()[3] +     "|div\n";
+    // values += "x_gateway|" +  WiFi.gatewayIP()[0] +   "." + WiFi.gatewayIP()[1] +   "." + WiFi.gatewayIP()[2] +   "." + WiFi.gatewayIP()[3] +   "|div\n";
+    // values += "x_netmask|" +  WiFi.subnetMask()[0] +  "." + WiFi.subnetMask()[1] +  "." + WiFi.subnetMask()[2] +  "." + WiFi.subnetMask()[3] +  "|div\n";
+    // values += "x_mac|" + GetMacAddress() +  "|div\n";
+
+    server.send(200, "text/plain", values);
+    Serial.println(__FUNCTION__);
+}
 
 // Check the Values is between 0-255
 bool checkRange(String Value)
@@ -180,4 +179,14 @@ void send_connection_state_values_html(void)
     Serial.println(__FUNCTION__);
 }
 
-#endif /* PAGE_NETWORKCONFIGURATION_H_INCLUDED */
+void sendRootPage(void)
+{
+    // Are there any POST/GET Fields ?
+    if (server.args() > 0 ) {
+        // Iterate through the fields
+        for ( uint8_t i = 0; i < server.args(); i++ ) {
+
+        }
+    }
+    server.send ( 200, "text/html", PAGE_Root );
+}

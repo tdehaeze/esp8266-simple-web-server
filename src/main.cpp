@@ -3,11 +3,11 @@
 
 void setup(void)
 {
-    // configure_console();
+    configure_console();
     // init_wifi();
     // scan_network();
     // init_ota();
-    // init_accesspoint();
+    init_accesspoint();
 }
 
 void configure_console(void)

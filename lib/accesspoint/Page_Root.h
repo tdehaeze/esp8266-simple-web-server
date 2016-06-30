@@ -1,7 +1,7 @@
 #ifndef PAGE_ROOT_H_INCLUDED
 #define PAGE_ROOT_H_INCLUDED
 
-#include "accesspoint.h"
+#include <accesspoint.h>
 
 const char PAGE_Root[] PROGMEM = R"=====(
 <!doctype html>
@@ -19,7 +19,7 @@ const char PAGE_Root[] PROGMEM = R"=====(
 </html>
 )=====";
 
-void sendRootPage()
+void sendRootPage(void)
 {
     // Are there any POST/GET Fields ?
     if (server.args() > 0 ) {

@@ -2,10 +2,10 @@
 #define PAGE_GENERAL_H_INCLUDED
 
 #include <Arduino.h> // For Serial
-#include "accesspoint.h"
-#include "helpers.h"
-#include "confignetwork.h"
-#include "WString.h"
+#include <accesspoint.h>
+#include <helpers.h>
+#include <confignetwork.h>
+#include <WString.h>
 
 const char PAGE_AdminGeneralSettings[] PROGMEM =  R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +34,7 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 
 
 // Functions for this Page
-void send_devicename_value_html()
+void send_devicename_value_html(void)
 {
     String values = "";
     values += "devicename|";
@@ -44,7 +44,7 @@ void send_devicename_value_html()
     Serial.println(__FUNCTION__);
 }
 
-void send_general_html()
+void send_general_html(void)
 {
     if (server.args() > 0)  // Save Settings
     {
@@ -58,7 +58,7 @@ void send_general_html()
     Serial.println(__FUNCTION__);
 }
 
-void send_general_configuration_values_html()
+void send_general_configuration_values_html(void)
 {
     String values ="";
     values += "devicename|";

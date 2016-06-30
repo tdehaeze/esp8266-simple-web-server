@@ -2,8 +2,8 @@
 #define PAGE_INFOMATION_H_INCLUDED
 
 #include <Arduino.h> // For Serial
-#include "accesspoint.h"
-#include "WString.h"
+#include <accesspoint.h>
+#include <WString.h>
 
 const char PAGE_Information[] PROGMEM = R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +19,7 @@ const char PAGE_Information[] PROGMEM = R"=====(
     <tr><td align="right">Gateway :</td><td><span id="x_gateway"></span></td></tr>
     <tr><td align="right">Mac :</td><td><span id="x_mac"></span></td></tr>
 
-  <tr><td colspan="2" align="center"><a href="javascript:GetState()" class="btn btn-m btn-blue">Refresh</a></td></tr>
+    <tr><td colspan="2" align="center"><a href="javascript:GetState()" class="btn btn-m btn-blue">Refresh</a></td></tr>
 </table>
 <script>
 
@@ -39,17 +39,18 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 )=====" ;
 
 
-String GetMacAddress()
+String GetMacAddress(void)
 {
-  uint8_t mac[6];
-  char macStr[18] = {0};
-  WiFi.macAddress(mac);
-  sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5]);
-  return  String(macStr);
+    uint8_t mac[6];
+    char macStr[18] = {0};
+    WiFi.macAddress(mac);
+    sprintf(macStr, "%02X:%02X:%02X:%02X:%02X:%02X", mac[0],  mac[1], mac[2], mac[3], mac[4], mac[5]);
+    return  String(macStr);
 }
 
 // FILL WITH INFOMATION
-void send_information_values_html ()
+// TODO
+void send_information_values_html(void)
 {
     String values = "";
     values += "x_ssid|" + WiFi.SSID() + "|div\n";

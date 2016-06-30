@@ -1,5 +1,5 @@
-#ifndef EEPROM_H_INCLUDED
-#define EEPROM_H_INCLUDED
+#ifndef EEPROMUTIL_H_INCLUDED
+#define EEPROMUTIL_H_INCLUDED
 
 #include <Arduino.h> // For Serial
 #include <EEPROM.h>
@@ -16,4 +16,4 @@ void EEPROMWritelong(int address, long value);
 long EEPROMReadlong(long address);
 
 
-#endif /* EEPROM_H_INCLUDED */
+#endif /* EEPROMUTIL_H_INCLUDED */

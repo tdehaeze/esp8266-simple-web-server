@@ -1,9 +1,9 @@
-#include "accesspoint.h"
+#include <accesspoint.h>
 
 void init_accesspoint(void)
 {
     WiFi.mode(WIFI_STA);
-    WiFi.softAP(SSID);
+    WiFi.softAP("ESP8266");
 
     Serial.printf("AP IP address: %s", WiFi.softAPIP().toString().c_str());
 
@@ -27,7 +27,7 @@ void init_accesspoint(void)
         server.send(200, "text/html", PAGE_Information);
     });
 
-    server.on("/general.html", send_general_html );
+    server.on("/general.html", send_general_html);
 
     server.on("/style.css", [](){
         Serial.println("style.css");

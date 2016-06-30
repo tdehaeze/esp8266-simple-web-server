@@ -1,4 +1,4 @@
-#include "eeprom.h"
+#include <eepromutil.h>
 
 const int ssid_location = 300;
 const int password_location = 400;
