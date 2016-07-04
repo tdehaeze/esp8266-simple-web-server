@@ -1,5 +1,11 @@
 #include <ota.h>
 
+#include <Arduino.h> // For Serial
+#include <ArduinoOTA.h>
+#include <confignetwork.h>
+
+t_server config_server;
+
 void init_ota(void)
 {
     ArduinoOTA.onStart([]() {
@@ -38,15 +44,15 @@ void ConfigureWifi(void)
     // Serial.println("Configuring Wifi");
 
     // WiFi.begin("WLAN", "password");
-    // WiFi.begin(config.ssid.c_str(), config.password.c_str());
+    // WiFi.begin(config_server.ssid.c_str(), config_server.password.c_str());
 
     // while (WiFi.status() != WL_CONNECTED) {
     //     Serial.println("WiFi not connected");
     //     delay(500);
     // }
 
-    // if (!config.dhcp) {
-    //     WiFi.config(IPAddress(config.IP[0], config.IP[1], config.IP[2], config.IP[3] ),  IPAddress(config.Gateway[0], config.Gateway[1], config.Gateway[2], config.Gateway[3] ) , IPAddress(config.Netmask[0], config.Netmask[1], config.Netmask[2], config.Netmask[3] ));
+    // if (!config_server.dhcp) {
+    //     WiFi.config(IPAddress(config_server.IP[0], config_server.IP[1], config_server.IP[2], config_server.IP[3] ),  IPAddress(config_server.Gateway[0], config_server.Gateway[1], config_server.Gateway[2], config_server.Gateway[3] ) , IPAddress(config_server.Netmask[0], config_server.Netmask[1], config_server.Netmask[2], config_server.Netmask[3] ));
     // }
 }
 
@@ -61,8 +67,8 @@ void ConfigureWifi(void)
 //     MDNS.begin(host);
 //     MDNS.addService("arduino", "tcp", aport);
 //     OTA.begin(aport);
-//     TelnetServer.begin();
-//     TelnetServer.setNoDelay(true);
+//     Telnetserver.begin();
+//     Telnetserver.setNoDelay(true);
 //     Serial.print("IP address: ");
 //     led(green);
 //     Serial.println(WiFi.localIP());
@@ -111,12 +117,12 @@ void ConfigureWifi(void)
 //         }
 //     }
 //     //IDE Monitor (connected to Serial)
-//     if (TelnetServer.hasClient()) {
+//     if (Telnetserver.hasClient()) {
 //         if (!Telnet || !Telnet.connected()) {
 //             if (Telnet) Telnet.stop();
-//             Telnet = TelnetServer.available();
+//             Telnet = Telnetserver.available();
 //         } else {
-//             WiFiClient toKill = TelnetServer.available();
+//             WiFiClient toKill = Telnetserver.available();
 //             toKill.stop();
 //         }
 //     }

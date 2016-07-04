@@ -1,27 +1,36 @@
 #include <htmlfunctions.h>
 
+#include <Arduino.h> // For Serial
+#include <confignetwork.h>
+#include <accesspoint.h>
+#include <helpers.h>
+#include <htmlpages.h>
+#include <ota.h>
+
+t_server config_server;
+
 // Functions for this Page
 void send_devicename_value_html(void)
 {
     String values = "";
     values += "devicename|";
-    values += config.DeviceName;
+    values += config_server.DeviceName;
     values += "|div\n";
-    server.send(200, "text/plain", values);
+    server_esp.send(200, "text/plain", values);
     Serial.println(__FUNCTION__);
 }
 
 void send_general_html(void)
 {
-    if (server.args() > 0)  // Save Settings
+    if (server_esp.args() > 0)  // Save Settings
     {
         String temp = "";
-        for (uint8_t i = 0; i < server.args(); i++) {
-            if (server.argName(i) == "devicename") config.DeviceName = urldecode(server.arg(i));
+        for (uint8_t i = 0; i < server_esp.args(); i++) {
+            if (server_esp.argName(i) == "devicename") config_server.DeviceName = urldecode(server_esp.arg(i));
         }
         // writeConfig();
     }
-    server.send(200, "text/html", PAGE_AdminGeneralSettings);
+    server_esp.send(200, "text/html", PAGE_AdminGeneralSettings);
     Serial.println(__FUNCTION__);
 }
 
@@ -29,10 +38,10 @@ void send_general_configuration_values_html(void)
 {
     String values ="";
     values += "devicename|";
-    values += config.DeviceName;
+    values += config_server.DeviceName;
     values += "|input\n";
 
-    server.send(200, "text/plain", values);
+    server_esp.send(200, "text/plain", values);
     Serial.println(__FUNCTION__);
 }
 
@@ -56,7 +65,7 @@ void send_information_values_html(void)
     // values += "x_netmask|" +  WiFi.subnetMask()[0] +  "." + WiFi.subnetMask()[1] +  "." + WiFi.subnetMask()[2] +  "." + WiFi.subnetMask()[3] +  "|div\n";
     // values += "x_mac|" + GetMacAddress() +  "|div\n";
 
-    server.send(200, "text/plain", values);
+    server_esp.send(200, "text/plain", values);
     Serial.println(__FUNCTION__);
 }
 
@@ -74,33 +83,33 @@ bool checkRange(String Value)
 void send_network_configuration_html(void)
 {
     // Save Settings
-    // if (server.args() > 0 ) {
+    // if (server_esp.args() > 0 ) {
     //     String temp = "";
-    //     config.dhcp = false;
-    //     for ( uint8_t i = 0; i < server.args(); i++ ) {
-    //         if (server.argName(i) == "ssid") config.ssid = urldecode(server.arg(i));
-    //         if (server.argName(i) == "password") config.password = urldecode(server.arg(i));
-    //         if (checkRange(server.arg(i))) {
-    //             if (server.argName(i) == "ip_0") config.IP[0] = server.arg(i).toInt();
-    //             if (server.argName(i) == "ip_1") config.IP[1] = server.arg(i).toInt();
-    //             if (server.argName(i) == "ip_2") config.IP[2] = server.arg(i).toInt();
-    //             if (server.argName(i) == "ip_3") config.IP[3] = server.arg(i).toInt();
-    //             if (server.argName(i) == "nm_0") config.Netmask[0] = server.arg(i).toInt();
-    //             if (server.argName(i) == "nm_1") config.Netmask[1] = server.arg(i).toInt();
-    //             if (server.argName(i) == "nm_2") config.Netmask[2] = server.arg(i).toInt();
-    //             if (server.argName(i) == "nm_3") config.Netmask[3] = server.arg(i).toInt();
-    //             if (server.argName(i) == "gw_0") config.Gateway[0] = server.arg(i).toInt();
-    //             if (server.argName(i) == "gw_1") config.Gateway[1] = server.arg(i).toInt();
-    //             if (server.argName(i) == "gw_2") config.Gateway[2] = server.arg(i).toInt();
-    //             if (server.argName(i) == "gw_3") config.Gateway[3] = server.arg(i).toInt();
+    //     config_server.dhcp = false;
+    //     for ( uint8_t i = 0; i < server_esp.args(); i++ ) {
+    //         if (server_esp.argName(i) == "ssid") config_server.ssid = urldecode(server_esp.arg(i));
+    //         if (server_esp.argName(i) == "password") config_server.password = urldecode(server_esp.arg(i));
+    //         if (checkRange(server_esp.arg(i))) {
+    //             if (server_esp.argName(i) == "ip_0") config_server.IP[0] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "ip_1") config_server.IP[1] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "ip_2") config_server.IP[2] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "ip_3") config_server.IP[3] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "nm_0") config_server.Netmask[0] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "nm_1") config_server.Netmask[1] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "nm_2") config_server.Netmask[2] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "nm_3") config_server.Netmask[3] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "gw_0") config_server.Gateway[0] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "gw_1") config_server.Gateway[1] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "gw_2") config_server.Gateway[2] = server_esp.arg(i).toInt();
+    //             if (server_esp.argName(i) == "gw_3") config_server.Gateway[3] = server_esp.arg(i).toInt();
     //         }
-    //         if (server.argName(i) == "dhcp") config.dhcp = true;
+    //         if (server_esp.argName(i) == "dhcp") config_server.dhcp = true;
     //     }
-    //     server.send ( 200, "text/html", PAGE_WaitAndReload );
+    //     server_esp.send ( 200, "text/html", PAGE_WaitAndReload );
     //     // writeConfig();
     //     ConfigureWifi();
     // } else {
-    //     server.send ( 200, "text/html", PAGE_NetworkConfiguration );
+    //     server_esp.send ( 200, "text/html", PAGE_NetworkConfiguration );
     // }
     Serial.println(__FUNCTION__);
 }
@@ -108,30 +117,30 @@ void send_network_configuration_html(void)
 // FILL THE PAGE WITH VALUES
 void send_network_configuration_values_html(void)
 {
-    String values ="";
+    // String values = "";
 
-    values += "ssid|" + (String) config.ssid + "|input\n";
-    values += "password|" + (String) config.password + "|input\n";
+    // values += "ssid|" + (String) config_server.ssid + "|input\n";
+    // values += "password|" + (String) config_server.password + "|input\n";
 
-    values += "ip_0|" + (String) config.IP[0] + "|input\n";
-    values += "ip_1|" + (String) config.IP[1] + "|input\n";
-    values += "ip_2|" + (String) config.IP[2] + "|input\n";
-    values += "ip_3|" + (String) config.IP[3] + "|input\n";
+    // values += "ip_0|" + (String) config_server.IP[0] + "|input\n";
+    // values += "ip_1|" + (String) config_server.IP[1] + "|input\n";
+    // values += "ip_2|" + (String) config_server.IP[2] + "|input\n";
+    // values += "ip_3|" + (String) config_server.IP[3] + "|input\n";
 
-    values += "nm_0|" + (String) config.Netmask[0] + "|input\n";
-    values += "nm_1|" + (String) config.Netmask[1] + "|input\n";
-    values += "nm_2|" + (String) config.Netmask[2] + "|input\n";
-    values += "nm_3|" + (String) config.Netmask[3] + "|input\n";
+    // values += "nm_0|" + (String) config_server.Netmask[0] + "|input\n";
+    // values += "nm_1|" + (String) config_server.Netmask[1] + "|input\n";
+    // values += "nm_2|" + (String) config_server.Netmask[2] + "|input\n";
+    // values += "nm_3|" + (String) config_server.Netmask[3] + "|input\n";
 
-    values += "gw_0|" + (String) config.Gateway[0] + "|input\n";
-    values += "gw_1|" + (String) config.Gateway[1] + "|input\n";
-    values += "gw_2|" + (String) config.Gateway[2] + "|input\n";
-    values += "gw_3|" + (String) config.Gateway[3] + "|input\n";
+    // values += "gw_0|" + (String) config_server.Gateway[0] + "|input\n";
+    // values += "gw_1|" + (String) config_server.Gateway[1] + "|input\n";
+    // values += "gw_2|" + (String) config_server.Gateway[2] + "|input\n";
+    // values += "gw_3|" + (String) config_server.Gateway[3] + "|input\n";
 
-    values += "dhcp|" + (String) (config.dhcp ? "checked" : "") + "|chk\n";
+    // values += "dhcp|" + (String) (config_server.dhcp ? "checked" : "") + "|chk\n";
 
-    server.send(200, "text/plain", values);
-    Serial.println(__FUNCTION__);
+    // server_esp.send(200, "text/plain", values);
+    // Serial.println(__FUNCTION__);
 }
 
 // FILL THE PAGE WITH NETWORKSTATE & NETWORKS
@@ -158,9 +167,9 @@ void send_connection_state_values_html(void)
         Networks += "<tr bgcolor='#DDDDDD'><td><strong>Name</strong></td><td><strong>Quality</strong></td><td><strong>Enc</strong></td><tr>";
         for (int i = 0; i < n; ++i) {
             int quality = 0;
-            if(WiFi.RSSI(i) <= -100) {
+            if (WiFi.RSSI(i) <= -100) {
                 quality = 0;
-            } else if(WiFi.RSSI(i) >= -50) {
+            } else if (WiFi.RSSI(i) >= -50) {
                 quality = 100;
             } else {
                 quality = 2 * (WiFi.RSSI(i) + 100);
@@ -175,18 +184,18 @@ void send_connection_state_values_html(void)
     values += "connectionstate|" + state + "|div\n";
     values += "networks|" + Networks + "|div\n";
 
-    server.send (200, "text/plain", values);
+    server_esp.send (200, "text/plain", values);
     Serial.println(__FUNCTION__);
 }
 
 void sendRootPage(void)
 {
     // Are there any POST/GET Fields ?
-    if (server.args() > 0 ) {
+    if (server_esp.args() > 0 ) {
         // Iterate through the fields
-        for ( uint8_t i = 0; i < server.args(); i++ ) {
+        for ( uint8_t i = 0; i < server_esp.args(); i++ ) {
 
         }
     }
-    server.send ( 200, "text/html", PAGE_Root );
+    server_esp.send ( 200, "text/html", PAGE_Root );
 }

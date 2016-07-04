@@ -1,5 +1,10 @@
 #include <wifi.h>
 
+#include <inttypes.h> // TODO => USED ?
+#include <Arduino.h> // For Serial
+#include <ESP8266WiFi.h>
+#include <ESP8266mDNS.h>
+
 void init_wifi(void)
 {
     // WiFi parameters
@@ -39,7 +44,7 @@ int connect_to_AP(const char* ssid_ap, const char* password_ap)
 //     WiFiServer server(80);
 
 //     // Start the server
-//     server.begin();
+//     server_esp.begin();
 //     Serial.println("Server started");
 // }
 
@@ -77,7 +82,7 @@ int scan_network(void)
 
 // void loop() {
 //     // Check if a client has connected
-//     WiFiClient client = server.available();
+//     WiFiClient client = server_esp.available();
 //     if (!client) {
 //         return;
 //     }

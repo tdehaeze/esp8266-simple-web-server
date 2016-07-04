@@ -1,11 +1,6 @@
 #ifndef HTMLFUNCTIONS_H_INCLUDED
 #define HTMLFUNCTIONS_H_INCLUDED
 
-#include <Arduino.h> // For Serial
-#include <confignetwork.h>
-#include <accesspoint.h>
-#include <helpers.h>
-#include <ota.h>
 #include <WString.h>
 
 void send_devicename_value_html(void);

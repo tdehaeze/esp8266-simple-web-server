@@ -1,8 +1,6 @@
 #ifndef EEPROMUTIL_H_INCLUDED
 #define EEPROMUTIL_H_INCLUDED
 
-#include <Arduino.h> // For Serial
-#include <EEPROM.h>
 #include <WString.h>
 
 void init_eeprom(void);

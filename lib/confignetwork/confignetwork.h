@@ -1,11 +1,9 @@
 #ifndef CONFIGNETWORK_H_INCLUDED
 #define CONFIGNETWORK_H_INCLUDED
 
-#include <Arduino.h> // For Serial
-#include <eepromutil.h>
 #include <WString.h>
 
-struct strConfig {
+typedef struct s_server {
     String      ssid;
     String      password;
     uint8_t     IP[4];
@@ -14,7 +12,7 @@ struct strConfig {
     bool        dhcp;
     String      ntpServerName;
     String      DeviceName;
-} config;
+} t_server;
 
 void writeConfig(void);
 void writeDefaultConfig(void);

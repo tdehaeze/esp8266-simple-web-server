@@ -1,7 +1,7 @@
 #ifndef HTMLPAGES_H_INCLUDED
 #define HTMLPAGES_H_INCLUDED
 
-const char PAGE_AdminMainPage[] PROGMEM = R"=====(
+const char PAGE_AdminMainPage[] = R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <strong>Administration</strong>
 <hr>
@@ -21,7 +21,7 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 </script>
 )=====";
 
-const char PAGE_AdminGeneralSettings[] PROGMEM =  R"=====(
+const char PAGE_AdminGeneralSettings[] =  R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <a href="/"  class="btn btn-s"><</a>&nbsp;&nbsp;<strong>General Settings</strong>
@@ -46,7 +46,7 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 </script>
 )=====";
 
-const char PAGE_Information[] PROGMEM = R"=====(
+const char PAGE_Information[] = R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -79,7 +79,7 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 </script>
 )=====" ;
 
-const char PAGE_NetworkConfiguration[] PROGMEM = R"=====(
+const char PAGE_NetworkConfiguration[] = R"=====(
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <a href="/" class="btn btn-s"><</a>&nbsp;&nbsp;<strong>Network Configuration</strong>
@@ -126,12 +126,12 @@ function load(e,t,n){if("js"==t){var a=document.createElement("script");a.src=e,
 </script>
 )=====";
 
-const char PAGE_WaitAndReload[] PROGMEM = R"=====(
+const char PAGE_WaitAndReload[] = R"=====(
 <meta http-equiv="refresh" content="5; URL=config.html">
 Please Wait....Configuring and Restarting.
 )=====";
 
-const char PAGE_Root[] PROGMEM = R"=====(
+const char PAGE_Root[] = R"=====(
 <!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script src="microajax.js"></script>
@@ -147,7 +147,7 @@ const char PAGE_Root[] PROGMEM = R"=====(
 </html>
 )=====";
 
-const char PAGE_microajax_js[] PROGMEM = R"=====(
+const char PAGE_microajax_js[] = R"=====(
 function microAjax(B,A){this.bindFunction=function(E,D){return function(){return E.apply(D,[D])}};this.stateChange=function(D){if(this.request.readyState==4){this.callbackFunction(this.request.responseText)}};this.getRequest=function(){if(window.ActiveXObject){return new ActiveXObject("Microsoft.XMLHTTP")}else{if(window.XMLHttpRequest){return new XMLHttpRequest()}}return false};this.postBody=(arguments[2]||"");this.callbackFunction=A;this.url=B;this.request=this.getRequest();if(this.request){var C=this.request;C.onreadystatechange=this.bindFunction(this.stateChange,this);if(this.postBody!==""){C.open("POST",B,true);C.setRequestHeader("X-Requested-With","XMLHttpRequest");C.setRequestHeader("Content-type","application/x-www-form-urlencoded");C.setRequestHeader("Connection","close")}else{C.open("GET",B,true)}C.send(this.postBody)}};
 
 function setValues(url) {
@@ -166,7 +166,7 @@ function setValues(url) {
 }
 )=====";
 
-const char PAGE_Style_css[] PROGMEM = R"=====(
+const char PAGE_Style_css[] = R"=====(
 body {
     color: #000000;
     font-family: avenir, helvetica, arial, sans-serif;

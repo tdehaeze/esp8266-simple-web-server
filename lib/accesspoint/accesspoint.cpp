@@ -1,56 +1,70 @@
 #include <accesspoint.h>
 
+#include <Arduino.h> // For Serial
+// #include <ESP8266WiFi.h>
+// #include <WiFiClient.h>
+// #include <stdio.h>
+// #include <wifi.h>
+// #include <WString.h>
+
+#include <htmlfunctions.h>
+#include <htmlpages.h>
+
+// #include "/lib/htmlpages/htmlpages.h"
+
+// #include <ESP8266Webserver.h>
+// ESP8266WebServer server_esp(80);
+
+ESP8266WebServer server_esp(80);
+
 void init_accesspoint(void)
 {
-    WiFi.mode(WIFI_STA);
-    WiFi.softAP("ESP8266");
+    WiFi.mode(WIFI_AP_STA);
+    WiFi.softAP("ESP8266_test");
 
     Serial.printf("AP IP address: %s", WiFi.softAPIP().toString().c_str());
 
-    // Admin page
-    server.on("/", [](){
+    server_esp.on("/", [](){
         Serial.println("admin.html");
-        server.send(200, "text/html", PAGE_AdminMainPage);  // const char top of page
+        server_esp.send(200, "text/html", PAGE_AdminMainPage);
     });
 
-    server.on("/favicon.ico", [](){
+    server_esp.on("/favicon.ico", [](){
         Serial.println("favicon.ico");
-        server.send (200, "text/html", "");
+        server_esp.send (200, "text/html", "");
     });
 
-    // Network config
-    server.on("/config.html", send_network_configuration_html);
+    server_esp.on("/config.html", send_network_configuration_html);
 
-    // Info Page
-    server.on("/info.html", [](){
+    server_esp.on("/info.html", [](){
         Serial.println("info.html");
-        server.send(200, "text/html", PAGE_Information);
+        server_esp.send(200, "text/html", PAGE_Information);
     });
 
-    server.on("/general.html", send_general_html);
+    server_esp.on("/general.html", send_general_html);
 
-    server.on("/style.css", [](){
+    server_esp.on("/style.css", [](){
         Serial.println("style.css");
-        server.send(200, "text/plain", PAGE_Style_css);
+        server_esp.send(200, "text/plain", PAGE_Style_css);
     });
 
-    server.on("/microajax.js", [](){
+    server_esp.on("/microajax.js", [](){
         Serial.println("microajax.js");
-        server.send(200, "text/plain", PAGE_microajax_js);
+        server_esp.send(200, "text/plain", PAGE_microajax_js);
     });
 
-    server.on("/admin/values", send_network_configuration_values_html);
-    server.on("/admin/connectionstate", send_connection_state_values_html);
-    server.on("/admin/infovalues", send_information_values_html);
-    server.on("/admin/devicename", send_devicename_value_html);
+    server_esp.on("/admin/values", send_network_configuration_values_html);
+    server_esp.on("/admin/connectionstate", send_connection_state_values_html);
+    server_esp.on("/admin/infovalues", send_information_values_html);
+    server_esp.on("/admin/devicename", send_devicename_value_html);
 
-    server.onNotFound([](){
+    server_esp.onNotFound([](){
         Serial.println("Page Not Found");
-        server.send(400, "text/html", "Page not Found");
+        server_esp.send(400, "text/html", "Page not Found");
     });
 
-    server.begin();
-    Serial.println( "HTTP server started");
+    server_esp.begin();
+    Serial.println("HTTP server started");
 }
 
 // static char * createForm(void)
@@ -94,23 +108,23 @@ void init_accesspoint(void)
 // static void handleRoot(void)
 // {
 //     Serial.println("GET");
-//     server.send(200, "text/html", createForm());
+//     server_esp.send(200, "text/html", createForm());
 // }
 
 // static void onNotFound(void)
 // {
 //     Serial.println("NOT FOUND");
-//     server.send(404, "text/html"); // TODO => Should change to a 301 code and redirect
+//     server_esp.send(404, "text/html"); // TODO => Should change to a 301 code and redirect
 // }
 
 // static void handlePost(void)
 // {
 //     Serial.println("POST");
 
-//     String ssid_selected = WiFi.SSID(server.argName(0).toInt());
-//     String password_selected = server.arg(1);
+//     String ssid_selected = WiFi.SSID(server_esp.argName(0).toInt());
+//     String password_selected = server_esp.arg(1);
 
-//     // int n = server.args();
+//     // int n = server_esp.args();
 //     // Serial.println(n);
 //     // for (int i = 0; i < n; ++i) {
 //     // }
@@ -122,9 +136,9 @@ void init_accesspoint(void)
 
 //     // If it's working
 //     if (success) {
-//         server.send(200, "text/html", "<h1>La configuration s'est correctement effectuee.</h1>");
+//         server_esp.send(200, "text/html", "<h1>La configuration s'est correctement effectuee.</h1>");
 //     } else {
-//         server.send(200, "text/html", "<h1>Erreur. Veuillez <a href='/'>essayer a nouveau</a>.</h1>");
+//         server_esp.send(200, "text/html", "<h1>Erreur. Veuillez <a href='/'>essayer a nouveau</a>.</h1>");
 //     }
 // }
 
@@ -141,16 +155,16 @@ void init_accesspoint(void)
 
 //     Serial.printf("AP IP address: %s", myIP.toString().c_str());
 
-//     server.on("/", HTTP_GET, handleRoot);
-//     server.on("/", HTTP_POST, handlePost);
-//     server.onNotFound(onNotFound);
+//     server_esp.on("/", HTTP_GET, handleRoot);
+//     server_esp.on("/", HTTP_POST, handlePost);
+//     server_esp.onNotFound(onNotFound);
 
-//     server.begin();
+//     server_esp.begin();
 
 //     Serial.println("HTTP server started");
 
 //     while(true)
 //     {
-//         server.handleClient();
+//         server_esp.handleClient();
 //     }
 // }

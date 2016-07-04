@@ -1,8 +1,10 @@
 #include <eepromutil.h>
 
+#include <Arduino.h> // For Serial
+#include <EEPROM.h>
+
 const int ssid_location = 300;
 const int password_location = 400;
-
 
 void init_eeprom(void)
 {
