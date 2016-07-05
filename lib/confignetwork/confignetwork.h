@@ -10,8 +10,6 @@ struct serverStruct {
     uint8_t     Netmask[4];
     uint8_t     Gateway[4];
     bool        dhcp;
-    String      ntpServerName;
-    String      DeviceName;
 };
 
 extern serverStruct config_server;

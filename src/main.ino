@@ -17,7 +17,7 @@ void setup(void)
     initConfig();
     initAccessPoint();
     initWifiSTA();
-    initOTA();
+    // initOTA();
 }
 
 void initConsole(void)

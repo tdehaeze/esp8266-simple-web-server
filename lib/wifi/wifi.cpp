@@ -18,18 +18,30 @@ void initWifiSTA(void)
 {
     if (isConfigMarker()) {
         Serial.printf("There is a configuration => try to connect to AP\n");
-        WiFi.begin(config_server.ssid.c_str(), config_server.password.c_str());
+        connectToWifi();
         WiFi.setAutoConnect(true);
         WiFi.setAutoReconnect(true);
     } else {
         Serial.printf("There is no configuration => disconnect\n");
-        WiFi.disconnect();
+        // WiFi.disconnect(false);
     }
+}
+
+void connectToWifi(void)
+{
+    Serial.printf("Try to connect to %s\n", config_server.ssid.c_str());
+    Serial.printf("With the following password %s\n", config_server.password.c_str());
+    WiFi.begin(config_server.ssid.c_str(), config_server.password.c_str());
 }
 
 int getWifiStatus(void)
 {
     return WiFi.status();
+}
+
+String getWifiSsid(void)
+{
+    return WiFi.SSID();
 }
 
 int scanNetwork(void)
