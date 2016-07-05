@@ -1,29 +1,27 @@
 #include <ota.h>
 
-#include <Arduino.h> // For Serial
+#include <Arduino.h>
 #include <ArduinoOTA.h>
 #include <confignetwork.h>
 
-t_server config_server;
-
-void init_ota(void)
+void initOTA(void)
 {
     ArduinoOTA.onStart([]() {
-        Serial.println("Start");
+        Serial.printf("Start\n");
     });
     ArduinoOTA.onEnd([]() {
-        Serial.println("\nEnd");
+        Serial.printf("End\n");
     });
     ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
         Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
     });
     ArduinoOTA.onError([](ota_error_t error) {
-        Serial.printf("Error[%u]: ", error);
-        if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-        else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-        else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-        else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-        else if (error == OTA_END_ERROR) Serial.println("End Failed");
+        Serial.printf("Error[%u]: \n", error);
+        if (error == OTA_AUTH_ERROR) Serial.printf("Auth Failed\n");
+        else if (error == OTA_BEGIN_ERROR) Serial.printf("Begin Failed\n");
+        else if (error == OTA_CONNECT_ERROR) Serial.printf("Connect Failed\n");
+        else if (error == OTA_RECEIVE_ERROR) Serial.printf("Receive Failed\n");
+        else if (error == OTA_END_ERROR) Serial.printf("End Failed\n");
     });
 
     ArduinoOTA.begin();
@@ -38,23 +36,6 @@ void init_ota(void)
 // WiFiServer TelnetServer(aport);
 // WiFiUDP OTA;
 // WiFiClient Telnet;
-
-void ConfigureWifi(void)
-{
-    // Serial.println("Configuring Wifi");
-
-    // WiFi.begin("WLAN", "password");
-    // WiFi.begin(config_server.ssid.c_str(), config_server.password.c_str());
-
-    // while (WiFi.status() != WL_CONNECTED) {
-    //     Serial.println("WiFi not connected");
-    //     delay(500);
-    // }
-
-    // if (!config_server.dhcp) {
-    //     WiFi.config(IPAddress(config_server.IP[0], config_server.IP[1], config_server.IP[2], config_server.IP[3] ),  IPAddress(config_server.Gateway[0], config_server.Gateway[1], config_server.Gateway[2], config_server.Gateway[3] ) , IPAddress(config_server.Netmask[0], config_server.Netmask[1], config_server.Netmask[2], config_server.Netmask[3] ));
-    // }
-}
 
 // void otaInit(void)
 // {
@@ -72,7 +53,7 @@ void ConfigureWifi(void)
 //     Serial.print("IP address: ");
 //     led(green);
 //     Serial.println(WiFi.localIP());
-//     Serial.println("OTA settings applied");
+//     Serial.printf("OTA settings applied\n");
 // }
 
 // void otaReceive(void)
@@ -91,7 +72,7 @@ void ConfigureWifi(void)
 //         WiFiUDP::stopAll();
 
 //         if (!Update.begin(size)) {
-//             Serial.println("Update Begin Error");
+//             Serial.printf("Update Begin Error\n");
 //             return;
 //         }
 
@@ -105,7 +86,7 @@ void ConfigureWifi(void)
 //             Serial.setDebugOutput(false);
 
 //             if (Update.end()) {
-//                 client.println("OK");
+//                 client.printf("OK\n");
 //                 Serial.printf("Update Success: %u\nRebooting...\n", millis() - startTime);
 //                 ESP.restart();
 //             } else {

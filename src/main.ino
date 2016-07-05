@@ -1,7 +1,4 @@
-// Import required libraries
-// #include "main.h"
-
-#include <Arduino.h> // For Serial
+#include <Arduino.h>
 #include <accesspoint.h>
 #include <confignetwork.h>
 #include <eepromutil.h>
@@ -14,18 +11,18 @@
 
 void setup(void)
 {
-    configure_console();
-    // init_wifi();
-    // scan_network();
-    // init_ota();
-    // writeDefaultConfig();
-    init_accesspoint();
+    delay(1000);
+    initConsole();
+    initEeprom();
+    initConfig();
+    initAccessPoint();
+    initWifiSTA();
+    initOTA();
 }
 
-void configure_console(void)
+void initConsole(void)
 {
-    // Start Serial
-    Serial.begin(115200);
+    Serial.begin(115200, SERIAL_8N1);
 }
 
 void loop(void)

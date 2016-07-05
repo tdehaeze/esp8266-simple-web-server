@@ -3,6 +3,6 @@
 
 #include <WString.h>
 
-String urldecode(String input);
+String urlDecode(String input);
 
 #endif /* HELPERS_H_INCLUDED */

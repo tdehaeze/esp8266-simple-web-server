@@ -3,15 +3,16 @@
 
 #include <WString.h>
 
-void init_eeprom(void);
-void WriteStringToEEPROM(int beginaddress, String string);
-String ReadStringFromEEPROM(int beginaddress);
+void initEeprom(void);
+void writeStringToEEPROM(int beginaddress, String string);
+String readStringFromEEPROM(int beginaddress);
 void storeSSID(char* ssid_to_store);
 void storePassword(char* password_to_store);
 String getSSID(void);
 String getPassword(void);
-void EEPROMWritelong(int address, long value);
-long EEPROMReadlong(long address);
-
+void setConfigMarker(void);
+void deleteConfigMarker(void);
+int isConfigMarker(void);
+void resetConfig(void);
 
 #endif /* EEPROMUTIL_H_INCLUDED */

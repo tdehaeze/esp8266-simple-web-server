@@ -16,7 +16,7 @@ static unsigned char h2int(char c)
 }
 
 // based on https://code.google.com/p/avr-netino/
-String urldecode(String input)
+String urlDecode(String input)
 {
     char c;
     String ret = "";

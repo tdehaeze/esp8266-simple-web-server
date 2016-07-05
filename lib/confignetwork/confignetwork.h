@@ -3,7 +3,7 @@
 
 #include <WString.h>
 
-typedef struct s_server {
+struct serverStruct {
     String      ssid;
     String      password;
     uint8_t     IP[4];
@@ -12,10 +12,13 @@ typedef struct s_server {
     bool        dhcp;
     String      ntpServerName;
     String      DeviceName;
-} t_server;
+};
 
+extern serverStruct config_server;
+
+void initConfig(void);
 void writeConfig(void);
 void writeDefaultConfig(void);
-bool readConfig(void);
+void readConfig(void);
 
 #endif /* CONFIGNETWORK_H_INCLUDED */
