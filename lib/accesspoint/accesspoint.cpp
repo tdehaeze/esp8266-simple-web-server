@@ -28,6 +28,7 @@ void initAccessPoint(void)
     server_esp.on("/config.html",   [](){ server_esp.send(200, "text/html", PAGE_CONFIG); });
     server_esp.on("/info.html",     [](){ server_esp.send(200, "text/html", PAGE_INFO); });
     server_esp.on("/general.html",  [](){ server_esp.send(200, "text/html", PAGE_GENERAL); });
+    server_esp.on("/value.html",  [](){ server_esp.send(200, "text/html", PAGE_VALUE); });
 
     server_esp.on("/post/connection/form", urlPostConnectionForm);
 
@@ -36,6 +37,8 @@ void initAccessPoint(void)
     server_esp.on("/get/connection/form", urlGetConnectionForm);
     server_esp.on("/get/connection/state", urlGetConnectionState);
     server_esp.on("/get/networks", urlGetNetworks);
+    server_esp.on("/get/networks", urlGetNetworks);
+    server_esp.on("/get/pin/value", urlGetPinValue);
 
     server_esp.onNotFound([](){
         server_esp.sendHeader("Location", String("/"), true);

@@ -13,11 +13,17 @@ void setup(void)
 {
     delay(1000);
     initConsole();
+    initPins();
     initEeprom();
     initConfig();
     initAccessPoint();
     initWifiSTA();
     // initOTA();
+}
+
+void initPins(void)
+{
+    pinMode(A0, INPUT_PULLUP);
 }
 
 void initConsole(void)
@@ -29,7 +35,6 @@ void loop(void)
 {
     yield(); // For ESP8266 to not dump
     server_esp.handleClient();
-    delay(10);
 
     // if (otaFlag) {
     //     otaReceive();
@@ -38,3 +43,19 @@ void loop(void)
     //     customLoop();
     // }
 }
+
+// int old_heap = ESP.getFreeHeap();
+// int old_vcc = ESP.getVcc();
+// while (true)
+// {
+//     int new_heap = ESP.getFreeHeap();
+//     if (old_heap != new_heap) {
+//         Serial.printf("Free Heap : %i\n", new_heap);
+//         old_heap = new_heap;
+//     }
+//     int new_vcc = ESP.getVcc();
+//     if (old_vcc != new_vcc) {
+//         Serial.printf("Vcc : %i\n", new_vcc);
+//         old_vcc = new_vcc;
+//     }
+// }

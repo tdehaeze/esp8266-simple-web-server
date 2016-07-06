@@ -10,7 +10,7 @@ const char PAGE_GENERAL[] = R"=====(
 )=====";
 
 const char PAGE_INDEX[] = R"=====(
-<meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link rel="stylesheet" href="style.css" type="text/css"><div class="header"><div class="title">Administration</div></div><hr><a href="general.html" class="btn btn-blue">General Configuration</a><br><a href="config.html" class="btn btn-blue">Network Configuration</a><br><a href="info.html" class="btn btn-blue">Network Information</a><br>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link rel="stylesheet" href="style.css" type="text/css"><div class="header"><div class="title">Administration</div></div><hr><a href="general.html" class="btn btn-blue">General Configuration</a><br><a href="config.html" class="btn btn-blue">Network Configuration</a><br><a href="info.html" class="btn btn-blue">Network Information</a><br><a href="value.html" class="btn btn-blue">Pin Voltage</a><br>
 )=====";
 
 const char PAGE_INFO[] = R"=====(
@@ -19,6 +19,10 @@ const char PAGE_INFO[] = R"=====(
 
 const char PAGE_RELOAD[] = R"=====(
 <meta http-equiv="refresh" content="5; URL=/"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link rel="stylesheet" href="style.css" type="text/css">Please Wait....Configuring and Restarting.
+)=====";
+
+const char PAGE_VALUE[] = R"=====(
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link rel="stylesheet" href="style.css" type="text/css"><script src="script.js"></script><div class="header"><a href="./" class="btn btn-s btn-back">&lt;</a><div class="title">Pin voltage</div></div><hr><div class="subtitle">Pin Voltage: <span id="value">0</span>V</div><script>function getPinValue(){setValues("/get/pin/value")}window.onload=function(){setInterval(getPinValue,1e3)}</script>
 )=====";
 
 const char PAGE_SCRIPT[] = R"=====(

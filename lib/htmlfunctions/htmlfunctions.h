@@ -12,5 +12,6 @@ void urlGetConnectionInfo(void);
 void urlGetConnectionForm(void);
 void urlGetConnectionState(void);
 void urlGetNetworks(void);
+void urlGetPinValue(void);
 
 #endif /* HTMLFUNCTIONS_H_INCLUDED */

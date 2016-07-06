@@ -25,6 +25,7 @@ String getDeviceName(void)
     return "ESP8266_" + getMacAddress().substring(0, 2) + getMacAddress().substring(3, 5) + getMacAddress().substring(6, 8);
 }
 
+// From WiFi.status() return the state of the Wifi connection
 String getConnectionState(void)
 {
     String state = "";
@@ -171,5 +172,18 @@ void urlGetNetworks(void)
     networks += "|div\n";
 
     server_esp.send(200, "text/plain", networks);
+    Serial.println(__FUNCTION__);
+}
+
+
+void urlGetPinValue(void)
+{
+    String value = "";
+
+    value += "value|";
+    value += 3.3*analogRead(A0)/1000;
+    value += "|div\n";
+
+    server_esp.send(200, "text/plain", value);
     Serial.println(__FUNCTION__);
 }
