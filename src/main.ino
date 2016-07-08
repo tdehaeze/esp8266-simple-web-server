@@ -9,6 +9,10 @@
 #include <wifi.h>
 #include <confignetwork.h>
 
+unsigned long previousMillis = 0;
+
+const long interval = 5000;
+
 void setup(void)
 {
     delay(1000);
@@ -35,6 +39,13 @@ void loop(void)
 {
     yield(); // For ESP8266 to not dump
     server_esp.handleClient();
+
+    unsigned long currentMillis = millis();
+
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
+        downloadFile();
+    }
 
     // if (otaFlag) {
     //     otaReceive();

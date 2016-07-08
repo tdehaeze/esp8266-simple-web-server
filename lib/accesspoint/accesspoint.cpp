@@ -40,6 +40,17 @@ void initAccessPoint(void)
     server_esp.on("/get/networks", urlGetNetworks);
     server_esp.on("/get/pin/value", urlGetPinValue);
 
+    // server_esp.onFileUpload([]() {
+    //   HTTPUpload& upload = server_esp.upload();
+
+    //   String Test = upload.filename.c_str();
+    //   Serial.println(Test);
+    //   // File f = SPIFFS.open(String("/" + Test ), "w");
+    //   // f.print(upload.buf);
+    //   // f.close();
+    //   yield();
+    // });
+
     server_esp.onNotFound([](){
         server_esp.sendHeader("Location", String("/"), true);
         server_esp.send(302, "text/plain", "");

@@ -9,5 +9,6 @@ int getWifiStatus(void);
 String getWifiSsid(void);
 int scanNetwork(void);
 void printWifiDebug(void);
+void downloadFile(void);
 
 #endif /* WIFI_H_INCLUDED */
