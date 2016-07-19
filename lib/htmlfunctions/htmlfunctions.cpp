@@ -8,6 +8,7 @@
 #include <htmlpages.h>
 #include <ota.h>
 #include <wifi.h>
+#include <FS.h>
 
 // Get the nac address of the esp8266
 String getMacAddress(void)
@@ -40,6 +41,62 @@ String getConnectionState(void)
     else state += "N/A";
 
     return state;
+}
+
+// ==================================
+// =========== /get/image ===========
+// ==================================
+void urlGetImage(void)
+{
+    // if (!SPIFFS.begin())
+    // {
+    //     Serial.println("SPIFFS failed to mount !\r\n");
+    // }
+    // else
+    // {
+    //     File f = SPIFFS.open("/image_100.png", "r");
+
+    //     if (!f)
+    //     {
+    //         Serial.println("Can't open SPIFFS file !\r\n");
+    //     }
+    //     else
+    //     {
+    //         char buf[1024];
+    //         int siz = f.size();
+    //         while(siz > 0) {
+    //             size_t len = std::min((int)(sizeof(buf) - 1), siz);
+    //             f.read((uint8_t *)buf, len);
+    //             buf[len] = 0;
+    //             siz -= sizeof(buf) - 1;
+    //             server_esp.sendContent_P(buf);
+    //         }
+    //         f.close();
+    //         server_esp.send(200, "image/png", "");
+    //     }
+    // }
+
+    Serial.println("urlGetImage");
+    char testing[1024];
+    memset(testing, 'a', 1024);
+    for(int i=0; i<4*1024; i++){
+        server_esp.sendContent_P(testing);
+    }
+    server_esp.send(200, "text/plain", "");
+
+    // int idx = 0;
+    // int time = getTimer();
+    // while(idx < 1024*8)
+    // {
+    //     send(mysock, testing, 1024, 0);
+
+    //     while(socket_sent==0)
+    //     {
+    //         m2m_wifi_handle_events(NULL);
+    //         nm_bsp_sleep(2);
+    //     }
+    //     idx++;
+    // }
 }
 
 // ==================================

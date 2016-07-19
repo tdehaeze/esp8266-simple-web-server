@@ -39,6 +39,7 @@ void initAccessPoint(void)
     server_esp.on("/get/networks", urlGetNetworks);
     server_esp.on("/get/networks", urlGetNetworks);
     server_esp.on("/get/pin/value", urlGetPinValue);
+    server_esp.on("/get/image", urlGetImage);
 
     // server_esp.onFileUpload([]() {
     //   HTTPUpload& upload = server_esp.upload();

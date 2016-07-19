@@ -7,6 +7,7 @@ String getMacAddress(void);
 String getDeviceName(void);
 String getConnectionState(void);
 void urlPostConnectionForm(void);
+void urlGetImage(void);
 void urlGetDeviceName(void);
 void urlGetConnectionInfo(void);
 void urlGetConnectionForm(void);

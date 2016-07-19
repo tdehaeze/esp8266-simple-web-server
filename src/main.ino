@@ -40,12 +40,12 @@ void loop(void)
     yield(); // For ESP8266 to not dump
     server_esp.handleClient();
 
-    unsigned long currentMillis = millis();
+    // unsigned long currentMillis = millis();
 
-    if (currentMillis - previousMillis >= interval) {
-        previousMillis = currentMillis;
-        downloadFile();
-    }
+    // if (currentMillis - previousMillis >= interval) {
+    //     previousMillis = currentMillis;
+    //     downloadFile();
+    // }
 
     // if (otaFlag) {
     //     otaReceive();
